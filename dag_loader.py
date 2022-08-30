@@ -2,12 +2,12 @@ import os
 from config import DATA_FOLDER
 from random_graphs import random_chordal_graph2, tree_plus, hairball_plus, tree_of_cliques, random_chordal_graph, shanmugam_random_chordal
 import numpy as np
-from causaldag import DAG
-import networkx as nx
-from tqdm import tqdm
-from enum import Enum
-from graph_utils import get_directed_clique_graph
-from mixed_graph import LabelledMixedGraph
+from causaldag import DAG   # from MIT phd student as well
+import networkx as nx  # Software for complex networks
+from tqdm import tqdm  # progress bar
+from enum import Enum  # support for enumerations
+from graph_utils import get_directed_clique_graph  # local file
+from mixed_graph import LabelledMixedGraph # local file
 
 
 class DagSampler(Enum):
@@ -125,6 +125,7 @@ class DagLoader:
             optimal_ivs = np.array(list(tqdm(
                 (len(dag.optimal_fully_orienting_interventions(new=True)) for dag in self.get_dags()),
                 total=self.num_dags
+                # dag is graphical_models.classes.dags.dag.DAG MIT student project
             )))
             np.savetxt(filename, optimal_ivs)
         else:
@@ -145,13 +146,3 @@ class DagLoader:
 
     def num_cliques(self):
         return np.array([len(nx.chordal_graph_cliques(dag.to_nx().to_undirected())) for dag in self.get_dags()])
-
-
-if __name__ == '__main__':
-    dl = DagLoader(10, 2, 10)
-    # dl.get_dags(overwrite=True)
-    ds = dl.get_dags()
-
-
-
-

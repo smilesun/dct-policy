@@ -3,7 +3,7 @@ from dag_loader import DagLoader, DagSampler
 from dct_policy import dct_policy
 from baseline_policies import random_policy, max_degree_policy, opt_single_policy, coloring_policy, greedy_minmax_policy, greedy_entropy_policy
 import numpy as np
-from tqdm import tqdm
+from tqdm import tqdm  # progress bar
 from p_tqdm import p_map
 from time import time
 from multiprocessing import cpu_count
@@ -22,12 +22,14 @@ ALG_DICT = {
 
 
 class AlgRunner:
+    # runs one algorithm
     def __init__(self, alg: str, dag_loader: DagLoader):
         self.alg = alg
         self.dag_loader = dag_loader
 
     @property
     def alg_folder(self):
+        # property of self.dag_loader
         return os.path.join(self.dag_loader.dag_folder, 'results', f'alg={self.alg}')
 
     def get_alg_results(self, overwrite=False, validate=True, multithread=True):
